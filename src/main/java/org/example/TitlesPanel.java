@@ -13,6 +13,12 @@ public class TitlesPanel extends JPanel implements ActionListener {
    private int start_angle = 0;
    private int shape;
 
+   /**
+    * Конструктор класу TitlesPanel ініціалізує об'єкт з вказаним типом фігури.
+    *
+    * @param _shape Тип фігури для відображення.
+    */
+
    public TitlesPanel(int _shape) {
       this.shape = _shape;
       (this.animation = new Timer(50, this)).setInitialDelay(50);
@@ -25,6 +31,12 @@ public class TitlesPanel extends JPanel implements ActionListener {
       }
 
    }
+
+   /**
+    * Метод doDrawing використовується для малювання анімованих фігур на панелі.
+    *
+    * @param g Об'єкт, який використовується для малювання.
+    */
 
    private void doDrawing(Graphics g) {
       this.is_done = false;

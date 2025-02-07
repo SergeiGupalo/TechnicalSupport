@@ -16,6 +16,13 @@ public class ShapeFactory {
    public int width = 25;
    public int height = 25;
 
+   /**
+    * Конструктор класу ShapeFactory на основі вказаного типу фігури.
+    *
+    * @param shape_type Тип фігури, яку слід створити.
+    * @throws Error Якщо вказаний тип фігури не підтримується.
+    */
+
    public ShapeFactory(int shape_type) {
       switch(shape_type / 10) {
       case 1:
@@ -68,6 +75,16 @@ public class ShapeFactory {
       }
 
    }
+
+   /**
+    * Створює фігуру вигляду зірки із вказаними параметрами.
+    *
+    * @param arms    Кількість віток зірки.
+    * @param center  Центральна точка зірки.
+    * @param rOuter  Зовнішній радіус зірки.
+    * @param rInner  Внутрішній радіус зірки.
+    * @return Створена фігура зірки.
+    */
 
    private static Shape createStar(int arms, Point center, double rOuter, double rInner) {
       double angle = 3.141592653589793D / (double)arms;
