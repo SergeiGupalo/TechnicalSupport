@@ -12,15 +12,12 @@ public class TitlesPanel extends JPanel implements ActionListener {
    private boolean is_done = true;
    private int start_angle = 0;
    private int shape;
+   private Shapes shapes;
+   private StyleShapes styleShapes;
 
-   /**
-    * Конструктор класу TitlesPanel ініціалізує об'єкт з вказаним типом фігури.
-    *
-    * @param _shape Тип фігури для відображення.
-    */
-
-   public TitlesPanel(int _shape) {
-      this.shape = _shape;
+   public TitlesPanel(Shapes shapes, StyleShapes styleShapes) {
+      this.shapes = shapes;
+      this.styleShapes = styleShapes;
       (this.animation = new Timer(50, this)).setInitialDelay(50);
       this.animation.start();
    }
@@ -32,12 +29,6 @@ public class TitlesPanel extends JPanel implements ActionListener {
 
    }
 
-   /**
-    * Метод doDrawing використовується для малювання анімованих фігур на панелі.
-    *
-    * @param g Об'єкт, який використовується для малювання.
-    */
-
    private void doDrawing(Graphics g) {
       this.is_done = false;
       (this.g2d = (Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -45,7 +36,7 @@ public class TitlesPanel extends JPanel implements ActionListener {
       Insets insets = this.getInsets();
       int w = size.width - insets.left - insets.right;
       int h = size.height - insets.top - insets.bottom;
-      ShapeFactory shape = new ShapeFactory(this.shape);
+      ShapeFactory shape = new ShapeFactory(this.shapes, this.styleShapes);
       this.g2d.setStroke(shape.stroke);
       this.g2d.setPaint(shape.paint);
       double angle = (double)(this.start_angle++);

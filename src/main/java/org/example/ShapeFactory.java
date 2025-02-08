@@ -11,80 +11,56 @@ import java.awt.geom.Rectangle2D.Double;
 
 public class ShapeFactory {
    public Shape shape;
+   private Shapes shapes;
+   private StyleShapes styleShapes;
    public BasicStroke stroke = new BasicStroke(3.0F);
    public Paint paint;
    public int width = 25;
    public int height = 25;
 
-   /**
-    * Конструктор класу ShapeFactory на основі вказаного типу фігури.
-    *
-    * @param shape_type Тип фігури, яку слід створити.
-    * @throws Error Якщо вказаний тип фігури не підтримується.
-    */
-
-   public ShapeFactory(int shape_type) {
-      switch(shape_type / 10) {
-      case 1:
-         this.shape = createStar(3, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 2.0D);
-         break;
-      case 2:
-      case 4:
-      case 6:
-      case 8:
-      default:
-         throw new Error("type is nusupported");
-      case 3:
-         this.shape = createStar(5, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 4.0D);
-         break;
-      case 5:
-         this.shape = new Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height);
-         break;
-      case 7:
-         GeneralPath path = new GeneralPath();
-         double tmp_height = Math.sqrt(2.0D) / 2.0D * (double)this.height;
-         path.moveTo((double)(-this.width / 2), -tmp_height);
-         path.lineTo(0.0D, -tmp_height);
-         path.lineTo((double)(this.width / 2), tmp_height);
-         path.closePath();
-         this.shape = path;
-         break;
-      case 9:
-         this.shape = new java.awt.geom.Arc2D.Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height, 30.0D, 300.0D, 2);
+   public ShapeFactory(Shapes shapes, StyleShapes styleShapes) {
+      switch(shapes) {
+         case shapes.Pentagon:
+            this.shape = createStar(3, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 2.0D);
+            break;
+         case shapes.Star:
+            this.shape = createStar(5, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 4.0D);
+            break;
+         case shapes.Square:
+            this.shape = new Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height);
+            break;
+         case shapes.Triangle:
+            GeneralPath path = new GeneralPath();
+            double tmp_height = Math.sqrt(2.0D) / 2.0D * (double)this.height;
+            path.moveTo((double)(-this.width / 2), -tmp_height);
+            path.lineTo(0.0D, -tmp_height);
+            path.lineTo((double)(this.width / 2), tmp_height);
+            path.closePath();
+            this.shape = path;
+            break;
+         case shapes.Circle:
+            this.shape = new java.awt.geom.Arc2D.Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height, 30.0D, 300.0D, 2);
+         default:
+            throw new Error("type is nusupported");
       }
 
-      switch(shape_type % 10) {
-      case 1:
-         this.stroke = new BasicStroke(3.0F);
-         break;
-      case 2:
-      case 5:
-      case 6:
-      default:
-         throw new Error("type is nusupported");
-      case 3:
-         break;
-      case 4:
-         this.stroke = new BasicStroke(7.0F);
-         break;
-      case 7:
-         this.paint = new GradientPaint((float)(-this.width), (float)(-this.height), Color.white, (float)this.width, (float)this.height, Color.gray, true);
-         break;
-      case 8:
-         this.paint = Color.red;
+      switch(styleShapes) {
+         case styleShapes.Black:
+            this.stroke = new BasicStroke(3.0F);
+            break;
+         case styleShapes.Bold_Black:
+            this.stroke = new BasicStroke(7.0F);
+            break;
+         case styleShapes.White_grey_gradient:
+            this.paint = new GradientPaint((float)(-this.width), (float)(-this.height), Color.white, (float)this.width, (float)this.height, Color.gray, true);
+            break;
+         case styleShapes.Red:
+            this.paint = Color.red;
+         default:
+            throw new Error("type is nusupported");
       }
 
    }
-
-   /**
-    * Створює фігуру вигляду зірки із вказаними параметрами.
-    *
-    * @param arms    Кількість віток зірки.
-    * @param center  Центральна точка зірки.
-    * @param rOuter  Зовнішній радіус зірки.
-    * @param rInner  Внутрішній радіус зірки.
-    * @return Створена фігура зірки.
-    */
 
    private static Shape createStar(int arms, Point center, double rOuter, double rInner) {
       double angle = 3.141592653589793D / (double)arms;
